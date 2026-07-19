@@ -7,10 +7,10 @@ Application entry point. Run with:  python app.py
 from flask import Flask, render_template, session, redirect, url_for
 from config import Config
 from database import close_db, init_db
-from routes.auth import auth_bp
-from routes.dashboard import dashboard_bp
-from routes.interview import interview_bp
-from routes.resume import resume_bp
+from auth import auth_bp
+from dashboard import dashboard_bp
+from interview import interview_bp
+from resume import resume_bp
 
 
 def create_app():
