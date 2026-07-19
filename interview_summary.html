@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Interview Summary - InterviewIQ{% endblock %}
+
+{% block content %}
+<div class="container chat-shell">
+  <div class="card text-center mb-24" style="background:linear-gradient(160deg, var(--primary-dark), #10142A 85%); color:#fff;">
+    <p style="font-family:var(--font-mono); color:var(--accent); font-size:0.8rem; letter-spacing:0.05em;">INTERVIEW COMPLETE</p>
+    <h1 style="font-size:2.4rem; margin:8px 0;">{{ "%.1f"|format(interview.avg_score) }} / 10</h1>
+    <p style="color:rgba(255,255,255,0.7);">{{ interview.category }} &middot; {{ interview.difficulty }} &middot; {{ interview.role }}</p>
+  </div>
+
+  <div class="flex gap-12 mb-24" style="flex-wrap:wrap;">
+    <a href="/interview/setup" class="btn btn-accent">Practice again</a>
+    <a href="/analytics" class="btn btn-outline">View analytics</a>
+    <a href="/dashboard" class="btn btn-ghost">Back to dashboard</a>
+  </div>
+
+  <h3 class="mb-16">Question-by-question breakdown</h3>
+  {% for r in records %}
+  <div class="card chat-history-item mb-16">
+    <div class="flex items-center justify-between mb-16">
+      <strong style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-faint);">QUESTION {{ r.question_number }}</strong>
+      {% if r.score %}
+      <span class="score-pill {{ 'score-high' if r.score >= 7 else 'score-mid' if r.score >= 4 else 'score-low' }}">{{ r.score }}/10</span>
+      {% endif %}
+    </div>
+    <p style="font-weight:600; margin-bottom:10px;">{{ r.question_text }}</p>
+    <p class="text-muted" style="font-size:0.88rem; margin-bottom:14px;">{{ r.answer_text or "Not answered" }}</p>
+    {% if r.feedback %}
+    <div class="feedback-block"><h5>Feedback</h5><p>{{ r.feedback }}</p></div>
+    <div class="feedback-block"><h5>Strengths</h5><p>{{ r.strengths }}</p></div>
+    <div class="feedback-block"><h5>Weaknesses</h5><p>{{ r.weaknesses }}</p></div>
+    <div class="feedback-block"><h5>Suggestions</h5><p>{{ r.suggestions }}</p></div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

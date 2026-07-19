@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Interview in progress - InterviewIQ{% endblock %}
+
+{% block content %}
+<div class="container chat-shell" data-interview-id="{{ interview.id }}">
+
+  <div class="chat-progress-label">
+    <span id="progressLabel">Question 1 of {{ interview.total_questions }}</span>
+    <span id="progressCategory">{{ interview.category }} &middot; {{ interview.difficulty }} &middot; {{ interview.role }}</span>
+  </div>
+  <div class="chat-progress-bar mb-24">
+    <div class="chat-progress-fill" id="progressFill" style="width: 0%;"></div>
+  </div>
+
+  <div id="chatHistory"></div>
+
+  <div class="question-spotlight" id="questionSpotlight">
+    <div class="question-meta">
+      <span id="questionNumTag">QUESTION 1</span>
+      <span>&middot;</span>
+      <span id="questionCatTag">{{ interview.category }}</span>
+    </div>
+    <div class="question-text" id="questionText">Loading your first question...</div>
+  </div>
+
+  <div class="card answer-box" id="answerBox">
+    <label class="form-label" for="answerInput">Your answer</label>
+    <textarea class="form-textarea" id="answerInput" placeholder="Type your answer as if you were speaking to the interviewer..."></textarea>
+    <div class="answer-meta">
+      <span class="word-counter" id="wordCounter">0 words</span>
+      <button class="btn btn-accent" id="submitAnswerBtn">Submit answer</button>
+    </div>
+  </div>
+
+  <div id="feedbackContainer"></div>
+
+  <div class="text-center mt-32" id="finishContainer" style="display:none;">
+    <button class="btn btn-primary btn-lg" id="finishBtn">Finish interview & see results</button>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/interview_chat.js') }}"></script>
+{% endblock %}

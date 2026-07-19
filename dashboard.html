@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - InterviewIQ{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="dash-header">
+    <div class="dash-greeting">
+      <h1>Welcome back, {{ user_name.split(' ')[0] if user_name else 'there' }} 👋</h1>
+      <p>Here's how your interview prep is going.</p>
+    </div>
+    <a href="/interview/setup" class="btn btn-accent btn-lg">+ Start new interview</a>
+  </div>
+
+  <div class="stats-grid" id="statsGrid">
+    <div class="card stat-card">
+      <span class="stat-label">Interviews completed</span>
+      <span class="stat-value" id="statTotal">-</span>
+      <span class="stat-sub">across all categories</span>
+    </div>
+    <div class="card stat-card">
+      <span class="stat-label">Average score</span>
+      <span class="stat-value" id="statAvg">-</span>
+      <span class="stat-sub">out of 10</span>
+    </div>
+    <div class="card stat-card">
+      <span class="stat-label">Best score</span>
+      <span class="stat-value" id="statBest">-</span>
+      <span class="stat-sub">personal best</span>
+    </div>
+    <div class="card stat-card">
+      <span class="stat-label">This week</span>
+      <span class="stat-value" id="statWeek">-</span>
+      <span class="stat-sub">interviews taken</span>
+    </div>
+  </div>
+
+  <div class="section-title"><span>Choose a category</span></div>
+  <div class="category-grid" id="categoryGrid">
+    {% for cat in categories %}
+    <a href="/interview/setup?category={{ cat }}" class="card card-hover category-card">
+      <span class="cat-icon">
+        {% if cat == 'HR' %}🤝{% elif cat == 'Technical' %}💻{% elif cat == 'Aptitude' %}🧮{% else %}⌨️{% endif %}
+      </span>
+      <h4>{{ cat }}</h4>
+      <p>
+        {% if cat == 'HR' %}Behavioral & communication questions.
+        {% elif cat == 'Technical' %}Concepts, systems, and design.
+        {% elif cat == 'Aptitude' %}Logical & quantitative reasoning.
+        {% else %}Coding problems & algorithms.{% endif %}
+      </p>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="section-title">
+    <span>Recent interviews</span>
+    <a href="/analytics">View full analytics →</a>
+  </div>
+  <div class="card" style="padding:0; overflow-x:auto;">
+    <table class="history-table" id="historyTable">
+      <thead>
+        <tr><th>Category</th><th>Difficulty</th><th>Role</th><th>Status</th><th>Score</th><th>Date</th></tr>
+      </thead>
+      <tbody id="historyBody">
+        <tr><td colspan="6" class="text-center text-muted" style="padding:30px;">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
